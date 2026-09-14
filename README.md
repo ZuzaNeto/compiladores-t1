@@ -154,9 +154,13 @@ java -cp target/classes br.com.warmup.compiler.Main
 ## 👥 Créditos
 
 **Aluno:** José Nunes de Sousa Neto
+
 **Disciplina:** EECP0026 — Compiladores  
+
 **Professor:** Prof. Dr. Sergio Souza Costa  
-**Instituição:** UFMA — Universidade Federal do Maranhão  
+
+**Instituição:** UFMA — Universidade Federal do Maranhão 
+
 **Semestre:** 2026.2
 
 ---
