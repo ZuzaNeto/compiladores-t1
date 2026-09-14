@@ -14,24 +14,37 @@ public class Scanner {
     public List<Token> scanTokens() {
         List<Token> tokens = new ArrayList<>();
         while (current < source.length()) {
-            char c = source.charAt(current++);
+            char c = source.charAt(current);
             if (Character.isWhitespace(c)) {
+                current++;
                 continue;
             }
+
+            if (Character.isDigit(c)) {
+                tokens.add(number());
+                continue;
+            }
+
+            current++;
             switch (c) {
                 case '+': tokens.add(new Token(TokenType.PLUS, "+")); break;
                 case '-': tokens.add(new Token(TokenType.MINUS, "-")); break;
                 case '*': tokens.add(new Token(TokenType.STAR, "*")); break;
                 case '/': tokens.add(new Token(TokenType.SLASH, "/")); break;
                 default:
-                    if (Character.isDigit(c)) {
-                        tokens.add(new Token(TokenType.NUM, String.valueOf(c)));
-                    } else {
-                        throw new RuntimeException("Caractere desconhecido: " + c);
-                    }
+                    throw new RuntimeException("Caractere desconhecido: " + c);
             }
         }
         tokens.add(new Token(TokenType.EOF, ""));
         return tokens;
+    }
+
+    private Token number() {
+        int start = current;
+        while (current < source.length() && Character.isDigit(source.charAt(current))) {
+            current++;
+        }
+        String value = source.substring(start, current);
+        return new Token(TokenType.NUM, value);
     }
 }
