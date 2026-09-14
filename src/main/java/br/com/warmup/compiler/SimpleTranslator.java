@@ -23,11 +23,11 @@ public class SimpleTranslator {
             if (lookahead == '+') {
                 match('+');
                 term();
-                System.out.print('+');
+                System.out.print(" +");
             } else if (lookahead == '-') {
                 match('-');
                 term();
-                System.out.print('-');
+                System.out.print(" -");
             } else {
                 return;
             }
@@ -35,17 +35,34 @@ public class SimpleTranslator {
     }
 
     private void term() throws IOException {
+        factor();
+        while (true) {
+            if (lookahead == '*') {
+                match('*');
+                factor();
+                System.out.print(" *");
+            } else if (lookahead == '/') {
+                match('/');
+                factor();
+                System.out.print(" /");
+            } else {
+                return;
+            }
+        }
+    }
+
+    private void factor() throws IOException {
         if (Character.isDigit((char) lookahead)) {
             char val = (char) lookahead;
             match(lookahead);
-            System.out.print(val);
+            System.out.print(" " + val);
         } else {
             throw new RuntimeException("Erro de sintaxe: esperado digito");
         }
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Digite a expressao (ex: 9-5+2) e pressione Enter:");
+        System.out.println("Digite a expressao (ex: 2+3*4) e pressione Enter:");
         SimpleTranslator translator = new SimpleTranslator();
         translator.expr();
         System.out.println();
