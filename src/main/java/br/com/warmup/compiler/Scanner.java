@@ -60,9 +60,8 @@ public class Scanner {
             current++;
         }
         String text = source.substring(start, current);
-        if ("let".equals(text)) {
-            return new Token(TokenType.LET, text);
-        }
+        if ("let".equals(text)) return new Token(TokenType.LET, text);
+        if ("print".equals(text)) return new Token(TokenType.PRINT, text);
         return new Token(TokenType.ID, text);
     }
 }
