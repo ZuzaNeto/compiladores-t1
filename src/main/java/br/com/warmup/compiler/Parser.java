@@ -25,21 +25,21 @@ public class Parser {
         } else if (match(TokenType.PRINT)) {
             printStatement();
         } else {
-            throw new RuntimeException("Esperado 'let' ou 'print', obtido: " + peek().getLexeme());
+            throw new RuntimeException("Erro Sintático: Esperado 'let' ou 'print', obtido: " + peek().getLexeme());
         }
     }
 
     private void letStatement() {
-        Token varToken = consume(TokenType.ID, "Esperado nome da variavel.");
-        consume(TokenType.ASSIGN, "Esperado '='.");
+        Token varToken = consume(TokenType.ID, "Esperado nome da variável.");
+        consume(TokenType.ASSIGN, "Esperado '=' após o identificador.");
         expr();
-        consume(TokenType.SEMICOLON, "Esperado ';'.");
+        consume(TokenType.SEMICOLON, "Esperado ';' ao final do comando let.");
         emit("pop " + varToken.getLexeme());
     }
 
     private void printStatement() {
         expr();
-        consume(TokenType.SEMICOLON, "Esperado ';'.");
+        consume(TokenType.SEMICOLON, "Esperado ';' ao final do comando print.");
         emit("print");
     }
 
@@ -65,7 +65,7 @@ public class Parser {
         if (match(TokenType.NUM) || match(TokenType.ID)) {
             emit("push " + previous().getLexeme());
         } else {
-            throw new RuntimeException("Esperado numero ou identificador, obtido: " + peek().getLexeme());
+            throw new RuntimeException("Erro Sintático: Fator inesperado '" + peek().getLexeme() + "'");
         }
     }
 
@@ -85,7 +85,7 @@ public class Parser {
 
     private Token consume(TokenType type, String message) {
         if (check(type)) return advance();
-        throw new RuntimeException(message);
+        throw new RuntimeException("Erro Sintático: " + message);
     }
 
     private boolean check(TokenType type) {
