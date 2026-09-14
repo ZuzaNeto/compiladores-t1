@@ -25,12 +25,19 @@ public class Scanner {
                 continue;
             }
 
+            if (Character.isLetter(c) || c == '_') {
+                tokens.add(identifier());
+                continue;
+            }
+
             current++;
             switch (c) {
                 case '+': tokens.add(new Token(TokenType.PLUS, "+")); break;
                 case '-': tokens.add(new Token(TokenType.MINUS, "-")); break;
                 case '*': tokens.add(new Token(TokenType.STAR, "*")); break;
                 case '/': tokens.add(new Token(TokenType.SLASH, "/")); break;
+                case '=': tokens.add(new Token(TokenType.ASSIGN, "=")); break;
+                case ';': tokens.add(new Token(TokenType.SEMICOLON, ";")); break;
                 default:
                     throw new RuntimeException("Caractere desconhecido: " + c);
             }
@@ -44,7 +51,18 @@ public class Scanner {
         while (current < source.length() && Character.isDigit(source.charAt(current))) {
             current++;
         }
-        String value = source.substring(start, current);
-        return new Token(TokenType.NUM, value);
+        return new Token(TokenType.NUM, source.substring(start, current));
+    }
+
+    private Token identifier() {
+        int start = current;
+        while (current < source.length() && (Character.isLetterOrDigit(source.charAt(current)) || source.charAt(current) == '_')) {
+            current++;
+        }
+        String text = source.substring(start, current);
+        if ("let".equals(text)) {
+            return new Token(TokenType.LET, text);
+        }
+        return new Token(TokenType.ID, text);
     }
 }
