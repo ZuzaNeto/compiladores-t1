@@ -8,7 +8,7 @@ O desenvolvimento segue a transição do Capítulo 2 do livro-texto da disciplin
 
 ## Estrutura e Arquitetura
 
-O projeto está modularizado dentro do pacote `br.com.warmup.compiler`[cite: 2]:
+O projeto está modularizado dentro do pacote `br.com.warmup.compiler`:
 
 ```text
 compiladores-t1/
